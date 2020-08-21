@@ -1,18 +1,4 @@
 
-/*
-    "We only asked if we could, but not if we should." - some random quote I heard from somewhere
-
-    Welcome to the source code of the most overengineered tic tac toe game probably ever!
-    With every overengineered piece of code, you must have one of these huge
-    comment blocks at the beginning of your program's source code!
-
-    Uhh..
-
-    Oh yeah! Lets get some copyright license!
-
-    [insert copyright license here]
-*/
-
 #include <iostream>
 #include <memory>
 #include <chrono>
@@ -25,6 +11,15 @@
 #include "Headers/BoardEnums.hpp"
 #include "Headers/Board.hpp"
 #include "Headers/CassieBot.hpp"
+
+
+
+void BotLoop()
+{
+
+}
+
+
 
 int main()
 {
