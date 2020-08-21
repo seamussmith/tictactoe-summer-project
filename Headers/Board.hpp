@@ -76,7 +76,7 @@ public:
             std::cout << std::endl;
         }
     }
-    // * Return VictoryState. If victory state is not Board::VictoryState::Nobody, this returns CurrentVictoryStatus without doing any victory check
+    // * Return VictoryState. If victory state is not Board::VictoryState::Nobody, this returns CurrentVictoryStatus without doing any victory check, making this function act like a getter
     BoardEnums::VictoryState CheckForVictor()
     {
         if (CurrentVictoryStatus != BoardEnums::VictoryState::Nobody)
