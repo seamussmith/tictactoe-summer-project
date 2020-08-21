@@ -164,15 +164,13 @@ public:
         {
             BoardEnums::SpaceState probableVictor = CurrentBoard[0][Size-1];
             bool isVictor = true;
-            int j = Size-1;
-            for (int i = 0; i != Size; ++i)
+            for (int i = 0, j = Size-1; i != Size; ++i, --j)
             {
                 if (CurrentBoard[i][j] != probableVictor)
                 {
                     isVictor = false;
                     break;
                 }
-                --j;
             }
             if (isVictor)
             {
