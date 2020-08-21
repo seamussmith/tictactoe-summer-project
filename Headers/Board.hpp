@@ -144,7 +144,6 @@ public:
         }
         // * Check for diagonal victory
         // NOTE: To be rewritten
-        /*
         {
             BoardEnums::SpaceState probableVictor = CurrentBoard[0][0];
             bool isVictor = true;
@@ -197,7 +196,6 @@ public:
                 }
             }
         }
-        */
         // If no victory condition is met and all spaces are filled, return VictoryState::Draw
         {
             bool foundEmptySpace = false;
