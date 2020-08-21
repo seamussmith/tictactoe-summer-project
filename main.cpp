@@ -144,7 +144,28 @@ void PvPLoop()
     }
 }
 
-int main()
+void PlayAgainPrompt()
+{
+    std::string playerResponse;
+    std::cout << "Play another game? y/n: "; // Ask player if they want to play another game
+    std::getline(std::cin, playerResponse);
+    while (!(playerResponse == "y") && !(playerResponse == "n"))
+    {
+        std::cout << "Please enter y or n: ";
+        std::getline(std::cin, playerResponse);
+    }
+    if (playerResponse == "y")
+    {
+        std::cout << (EnemyIsBot ? "CassieBot: Lets give it another go!\n" : "Resetting board...\n");
+        TicTacToeBoard->ClearBoard();
+    }
+    else
+    {
+        Playing = false;
+    }
+}
+
+void Setup()
 {
     Bot->UpdateVision(*TicTacToeBoard);
     std::cout << "Welcome to my TicTacToe Game!\n"
@@ -178,28 +199,17 @@ int main()
         }
         Bot->SetPlayer(playerResponse == "x" ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X);
     }
+}
+
+int main()
+{
+    Setup();
     while (Playing)
     {
         if (EnemyIsBot)
             BotLoop();
         else
             PvPLoop();
-        std::string playerResponse;
-        std::cout << "Play another game? y/n: "; // Ask player if they want to play another game
-        std::getline(std::cin, playerResponse);
-        while (!(playerResponse == "y") && !(playerResponse == "n"))
-        {
-            std::cout << "Please enter y or n: ";
-            std::getline(std::cin, playerResponse);
-        }
-        if (playerResponse == "y")
-        {
-            std::cout << (EnemyIsBot ? "CassieBot: Lets give it another go!\n" : "Resetting board...\n");
-            TicTacToeBoard->ClearBoard();
-        }
-        else
-        {
-            Playing = false;
-        }
+        PlayAgainPrompt();
     }
 }
