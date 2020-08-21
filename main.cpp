@@ -13,6 +13,7 @@
 #include "Headers/CassieBot.hpp"
 
 bool Playing = true;
+bool EnemyIsBot = false;
 std::unique_ptr<Board<BOARDSIZE>> TicTacToeBoard = std::make_unique<Board<BOARDSIZE>>();
 std::unique_ptr<CassieBot<Board<BOARDSIZE>>> Bot = std::make_unique<CassieBot<Board<BOARDSIZE>>>();
 
@@ -91,7 +92,56 @@ void BotLoop()
 
 void PvPLoop()
 {
-
+    while (!(int)TicTacToeBoard->CheckForVictor()) // While there is no victor...
+    {
+        std::cout << std::endl;
+        TicTacToeBoard->DrawBoard();
+        int move = 0;
+        std::string userInput;
+        std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn: "; // Get player's move
+        std::getline(std::cin, userInput);
+        // Below are multiple checks that make sure the player's inputs are valid
+        while(!tparse::tryIntParse(userInput, move))
+        {
+            std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
+            std::getline(std::cin, userInput);
+        }
+        while ((int)TicTacToeBoard->SetSpace(move))
+        {
+            switch (TicTacToeBoard->SetSpace(move))
+            {
+            case BoardEnums::MoveResult::MoveOutOfRange:
+                std::cout << "Please enter a number between 1 and 9, Player " << TicTacToeBoard->GetTurn() << ": ";
+                break;
+            case BoardEnums::MoveResult::SpaceTaken:
+                std::cout << "Please choose an empty space, Player " << TicTacToeBoard->GetTurn() << ": ";
+                break;
+            }
+            std::getline(std::cin, userInput);
+            while(!tparse::tryIntParse(userInput, move))
+            {
+                std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
+                std::getline(std::cin, userInput);
+            }
+        }
+    }
+    std::cout << std::endl;
+    TicTacToeBoard->DrawBoard();
+    switch (TicTacToeBoard->CheckForVictor()) // Print text for victory state
+    {
+    case BoardEnums::VictoryState::Draw:
+        std::cout << "The game has ended in a draw!\n";
+        break;
+    case BoardEnums::VictoryState::X:
+        std::cout << "Player X wins!\n";
+        break;
+    case BoardEnums::VictoryState::O:
+        std::cout << "Player O wins!\n";
+        break;
+    case BoardEnums::VictoryState::Nobody:
+        std::cout << "Nobody wins! Wait that shouldn't have happened...\n";
+        break;
+    }
 }
 
 int main()
@@ -100,7 +150,6 @@ int main()
     std::cout << "Welcome to my TicTacToe Game!\n"
         << "Enter a number from 1 to 9 to choose a space\n"
         << "Would you like to play with a bot? y/n: ";
-    bool enemyIsBot = false;
     std::string playerResponse;
     std::getline(std::cin, playerResponse);
     while (playerResponse != "y" && playerResponse != "n")
@@ -110,14 +159,14 @@ int main()
     }
     if (playerResponse == "y")
     {
-        enemyIsBot = true;
+        EnemyIsBot = true;
         std::cout << "CassieBot: Lets play!" << std::endl;
     }
     else
     {
-        enemyIsBot = false;
+        EnemyIsBot = false;
     }
-    if (enemyIsBot)
+    if (EnemyIsBot)
     {
         std::cout << "Would you like play as Player X or Player O? x/o: ";
         std::string playerResponse;
@@ -131,7 +180,7 @@ int main()
     }
     while (Playing)
     {
-        if (enemyIsBot)
+        if (EnemyIsBot)
             BotLoop();
         else
             PvPLoop();
@@ -145,7 +194,7 @@ int main()
         }
         if (playerResponse == "y")
         {
-            std::cout << (enemyIsBot ? "CassieBot: Lets give it another go!\n" : "Resetting board...\n");
+            std::cout << (EnemyIsBot ? "CassieBot: Lets give it another go!\n" : "Resetting board...\n");
             TicTacToeBoard->ClearBoard();
         }
         else
