@@ -12,14 +12,17 @@
 #include "Headers/Board.hpp"
 #include "Headers/CassieBot.hpp"
 
-
+bool Playing = true;
 
 void BotLoop()
 {
 
 }
 
+void PvPLoop()
+{
 
+}
 
 int main()
 {
@@ -58,7 +61,6 @@ int main()
         }
         Bot->SetPlayer(playerResponse == "x" ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X);
     }
-    bool playing = true;
     while (playing) // Main game loop
     {
         if (enemyIsBot)
