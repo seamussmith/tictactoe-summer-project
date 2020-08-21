@@ -23,7 +23,7 @@ void BotLoop()
         std::cout << std::endl;
         TicTacToeBoard->DrawBoard();
         int move = 0;
-        if (TicTacToeBoard->Turn == (Bot->Represents == BoardEnums::PlayerTurnState::X ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X)) // Check if it is the player's turn
+        if (TicTacToeBoard->Turn != Bot->Represents) // Check if it is the player's turn
         {
             std::string userInput;
             std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn: "; // Get player's move
