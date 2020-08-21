@@ -143,6 +143,8 @@ public:
             }
         }
         // * Check for diagonal victory
+        // NOTE: To be rewritten
+        /*
         {
             BoardEnums::SpaceState probableVictor = CurrentBoard[0][0];
             bool isVictor = true;
@@ -169,11 +171,13 @@ public:
             }
         }
         {
-            BoardEnums::SpaceState probableVictor = CurrentBoard[0][Size-1];
+            // FIXME: Left to right diagonal victory check logic is completely broken
+            BoardEnums::SpaceState probableVictor = CurrentBoard[Size-1][0];
             bool isVictor = true;
-            for (int i = Size-1; i != -1; --i)
+            for (int i = 0; i != Size; ++i)
             {
-                if (CurrentBoard[Size - i][i] != probableVictor)
+                int j = abs(Size-1 - i);
+                if (CurrentBoard[j][i] != probableVictor)
                 {
                     isVictor = false;
                     break;
@@ -193,6 +197,7 @@ public:
                 }
             }
         }
+        */
         // If no victory condition is met and all spaces are filled, return VictoryState::Draw
         {
             bool foundEmptySpace = false;
