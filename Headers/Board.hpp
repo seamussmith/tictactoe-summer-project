@@ -143,7 +143,6 @@ public:
             }
         }
         // * Check for diagonal victory
-        // NOTE: To be rewritten
         {
             BoardEnums::SpaceState probableVictor = CurrentBoard[0][0];
             bool isVictor = true;
@@ -170,17 +169,17 @@ public:
             }
         }
         {
-            // FIXME: Left to right diagonal victory check logic is completely broken
-            BoardEnums::SpaceState probableVictor = CurrentBoard[Size-1][0];
+            BoardEnums::SpaceState probableVictor = CurrentBoard[0][Size-1];
             bool isVictor = true;
+            int j = Size-1;
             for (int i = 0; i != Size; ++i)
             {
-                int j = abs(Size-1 - i);
-                if (CurrentBoard[j][i] != probableVictor)
+                if (CurrentBoard[i][j] != probableVictor)
                 {
                     isVictor = false;
                     break;
                 }
+                --j;
             }
             if (isVictor)
             {
