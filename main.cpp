@@ -18,7 +18,8 @@ std::unique_ptr<CassieBot<Board<BOARDSIZE>>> Bot = std::make_unique<CassieBot<Bo
 
 void BotLoop()
 {
-    while (!(int)TicTacToeBoard->CheckForVictor()) // While there is no victor...
+    BoardEnums::VictoryState victoryState = BoardEnums::VictoryState::Nobody;
+    while (victoryState == BoardEnums::VictoryState::Nobody) // While there is no victor...
     {
         std::cout << std::endl;
         TicTacToeBoard->DrawBoard();
@@ -67,10 +68,11 @@ void BotLoop()
             }
             std::cout << "CassieBot: I choose space " << move << "!" << std::endl;
         }
+        victoryState = TicTacToeBoard->CheckForVictor();
     }
     std::cout << std::endl;
     TicTacToeBoard->DrawBoard();
-    switch (TicTacToeBoard->CheckForVictor()) // Print text for victory state
+    switch (victoryState) // Print text for victory state
     {
     case BoardEnums::VictoryState::Draw:
         std::cout << "The game has ended in a draw!\n";
