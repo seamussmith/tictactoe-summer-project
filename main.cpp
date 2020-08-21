@@ -13,6 +13,8 @@
 #include "Headers/CassieBot.hpp"
 
 bool Playing = true;
+std::unique_ptr<Board<BOARDSIZE>> TicTacToeBoard = std::make_unique<Board<BOARDSIZE>>(); // Hope this helps with massive board sizes (note from future self: it didnt)
+std::unique_ptr<CassieBot<Board<BOARDSIZE>>> Bot = std::make_unique<CassieBot<Board<BOARDSIZE>>>();
 
 void BotLoop()
 {
@@ -26,8 +28,6 @@ void PvPLoop()
 
 int main()
 {
-    std::unique_ptr<Board<BOARDSIZE>> TicTacToeBoard = std::make_unique<Board<BOARDSIZE>>(); // Hope this helps with massive board sizes (note from future self: it didnt)
-    std::unique_ptr<CassieBot<Board<BOARDSIZE>>> Bot = std::make_unique<CassieBot<Board<BOARDSIZE>>>();
     Bot->UpdateVision(*TicTacToeBoard);
     std::cout << "Welcome to my TicTacToe Game!\n"
         << "Enter a number from 1 to 9 to choose a space\n"
@@ -61,7 +61,15 @@ int main()
         }
         Bot->SetPlayer(playerResponse == "x" ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X);
     }
-    while (playing) // Main game loop
+    while (Playing)
+    {
+        if (enemyIsBot)
+            BotLoop();
+        else
+            PvPLoop();
+    }
+    /*
+    while (Playing) // Main game loop
     {
         if (enemyIsBot)
         {
@@ -201,7 +209,8 @@ int main()
         }
         else
         {
-            playing = false;
+            Playing = false;
         }
-    }
+        
+    }*/
 }
