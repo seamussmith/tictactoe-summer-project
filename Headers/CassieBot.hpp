@@ -1,8 +1,5 @@
 #ifndef _CASSIEBOT_
 #define _CASSIEBOT_
-
-#include <memory> // * Maybe heap allocation will help out with runtime stack overflow errors on bigger boards... - Past Self
-                  // * Nope! In fact, I think it made it worse. - Future Self
 #include <array>
 #include "reliablerand.hpp"
 #include "Board.hpp"
@@ -35,9 +32,9 @@ public:
             for (int j = 0; j != Vision.BoardSize; ++j)
             {
                 ++move;
-                std::unique_ptr<BoardType> itterationCheck = std::make_unique<BoardType>(Vision);
-                itterationCheck->SetSpace(move);
-                if ((int)itterationCheck->CheckForVictor())
+                BoardType itterationCheck = Vision;
+                itterationCheck.SetSpace(move);
+                if ((int)itterationCheck.CheckForVictor())
                 {
                     return move;
                 }
@@ -49,10 +46,10 @@ public:
             for (int j = 0; j != Vision.BoardSize; ++j)
             {
                 ++move;
-                std::unique_ptr<BoardType> itterationCheck = std::make_unique<BoardType>(Vision);
-                itterationCheck->Turn = (Represents == BoardEnums::PlayerTurnState::X ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X); // Set board to opposite player's turn
-                itterationCheck->SetSpace(move);
-                if ((int)itterationCheck->CheckForVictor())
+                BoardType itterationCheck = Vision;
+                itterationCheck.Turn = (Represents == BoardEnums::PlayerTurnState::X ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X); // Set board to opposite player's turn
+                itterationCheck.SetSpace(move);
+                if ((int)itterationCheck.CheckForVictor())
                 {
                     return move;
                 }
@@ -60,11 +57,11 @@ public:
         }
         // If a victory state isnt possible, choose a random empty spot
         move = 0;
-        std::unique_ptr<BoardType> itterationCheck = std::make_unique<BoardType>(Vision);
-        while (itterationCheck->SetSpace(move) != BoardEnums::MoveResult::Success)
+        BoardType itterationCheck = Vision;
+        while (itterationCheck.SetSpace(move) != BoardEnums::MoveResult::Success)
         {
-            itterationCheck = std::make_unique<BoardType>(Vision);
-            move = relrand::genint<unsigned long long>(1, Vision.BoardSize * Vision.BoardSize); // in case of this function being an unreliable piece of garbage, replace with: rand() % Vision.BoardSize * Vision.BoardSize + 1
+            itterationCheck = Vision;
+            move = relrand::genint<unsigned long long>(1, Vision.BoardSize * Vision.BoardSize);
         }
         return move;
     }

@@ -30,13 +30,6 @@ public:
         }
         Turn = BoardEnums::PlayerTurnState::X;
     }
-    Board(Board<Size>& CopiedBoard) // This constructor basically copies the given board. To be used for heap allocated memory copying.
-    {
-        this->CurrentBoard = CopiedBoard.GetBoard();
-        this->CurrentVictoryStatus = CopiedBoard.CheckForVictor(); // Probably unnecessary...
-        this->BoardSize = CopiedBoard.BoardSize;
-        this->Turn = CopiedBoard.Turn;
-    }
     // ? Maybe this function could be renamed to something more descriptive.
     // NOTE: If this function returns MoveResult::Success, it will change the turn state to the opposite player's turn.
     BoardEnums::MoveResult SetSpace(int space) // Takes int from 1 to <Size>. Returns success state of move.
