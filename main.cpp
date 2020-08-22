@@ -31,12 +31,12 @@ void BotLoop()
             std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn: "; // Get player's move
             std::getline(std::cin, userInput);
             // Below are multiple checks that make sure the player's inputs are valid. It will run Board->SetSpace() until it returns a success state.
-            while(!tparse::tryIntParse(userInput, move))
+            while(not tparse::tryIntParse(userInput, move))
             {
                 std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
                 std::getline(std::cin, userInput);
             }
-            while ((int)TicTacToeBoard->SetSpace(move))
+            while (TicTacToeBoard->SetSpace(move) != BoardEnums::MoveResult::Success)
             {
                 switch (TicTacToeBoard->SetSpace(move))
                 {
@@ -48,7 +48,7 @@ void BotLoop()
                     break;
                 }
                 std::getline(std::cin, userInput);
-                while(!tparse::tryIntParse(userInput, move))
+                while(not tparse::tryIntParse(userInput, move))
                 {
                     std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
                     std::getline(std::cin, userInput);
@@ -92,7 +92,8 @@ void BotLoop()
 
 void PvPLoop()
 {
-    while (!(int)TicTacToeBoard->CheckForVictor()) // While there is no victor...
+    BoardEnums::VictoryState victoryState = BoardEnums::VictoryState::Nobody;
+    while (victoryState == BoardEnums::VictoryState::Nobody) // While there is no victor...
     {
         std::cout << std::endl;
         TicTacToeBoard->DrawBoard();
@@ -101,12 +102,12 @@ void PvPLoop()
         std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn: "; // Get player's move
         std::getline(std::cin, userInput);
         // Below are multiple checks that make sure the player's inputs are valid
-        while(!tparse::tryIntParse(userInput, move))
+        while(not tparse::tryIntParse(userInput, move))
         {
             std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
             std::getline(std::cin, userInput);
         }
-        while ((int)TicTacToeBoard->SetSpace(move))
+        while (TicTacToeBoard->SetSpace(move) != BoardEnums::MoveResult::Success)
         {
             switch (TicTacToeBoard->SetSpace(move))
             {
@@ -118,16 +119,17 @@ void PvPLoop()
                 break;
             }
             std::getline(std::cin, userInput);
-            while(!tparse::tryIntParse(userInput, move))
+            while(not tparse::tryIntParse(userInput, move))
             {
                 std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
                 std::getline(std::cin, userInput);
             }
         }
+        victoryState = TicTacToeBoard->CheckForVictor();
     }
     std::cout << std::endl;
     TicTacToeBoard->DrawBoard();
-    switch (TicTacToeBoard->CheckForVictor()) // Print text for victory state
+    switch (victoryState) // Print text for victory state
     {
     case BoardEnums::VictoryState::Draw:
         std::cout << "The game has ended in a draw!\n";
@@ -149,7 +151,7 @@ void PlayAgainPrompt()
     std::string playerResponse;
     std::cout << "Play another game? y/n: "; // Ask player if they want to play another game
     std::getline(std::cin, playerResponse);
-    while (!(playerResponse == "y") && !(playerResponse == "n"))
+    while (not(playerResponse == "y") and not(playerResponse == "n"))
     {
         std::cout << "Please enter y or n: ";
         std::getline(std::cin, playerResponse);
@@ -173,7 +175,7 @@ void Setup()
         << "Would you like to play with a bot? y/n: ";
     std::string playerResponse;
     std::getline(std::cin, playerResponse);
-    while (playerResponse != "y" && playerResponse != "n")
+    while (playerResponse != "y" and playerResponse != "n")
     {
         std::cout << "Please enter y or n: ";
         std::getline(std::cin, playerResponse);
@@ -192,7 +194,7 @@ void Setup()
         std::cout << "Would you like play as Player X or Player O? x/o: ";
         std::string playerResponse;
         std::getline(std::cin, playerResponse);
-        while (!(playerResponse == "x") && !(playerResponse == "o"))
+        while (!(playerResponse == "x") and !(playerResponse == "o"))
         {
             std::cout << "Please enter x or o: ";
             std::getline(std::cin, playerResponse);
