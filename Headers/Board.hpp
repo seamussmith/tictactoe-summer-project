@@ -36,7 +36,7 @@ public:
     {
         if (CurrentVictoryStatus != BoardEnums::VictoryState::Nobody)
             return BoardEnums::MoveResult::BoardAlreadyWon;
-        if (!((space <= Size * Size) and (space >= 1)))
+        if (not((space <= Size * Size) and (space >= 1)))
             return BoardEnums::MoveResult::MoveOutOfRange;
         unsigned long long row = floor((space - 1) / Size); // Convert inputted number to 2d array indexes
         unsigned long long col = (space - 1) % Size;
@@ -202,7 +202,7 @@ public:
                 if (foundEmptySpace)
                     break;
             }
-            if (!foundEmptySpace)
+            if (not foundEmptySpace)
             {
                 CurrentVictoryStatus = BoardEnums::VictoryState::Draw;
                 return BoardEnums::VictoryState::Draw;
@@ -242,7 +242,7 @@ public:
     {
         if (CurrentVictoryStatus != BoardEnums::VictoryState::Nobody)
             return BoardEnums::MoveResult::BoardAlreadyWon;
-        if (!((space <= Size * Size) and (space >= 1)))
+        if (not((space <= Size * Size) and (space >= 1)))
             return BoardEnums::MoveResult::MoveOutOfRange;
         unsigned long long row = floor((space - 1) / Size); // Convert inputted number to 2d array indexes
         unsigned long long col = (space - 1) % Size;
