@@ -1,8 +1,8 @@
-
 #include <iostream>
 #include <memory>
 #include <chrono>
 #include <boost/lexical_cast.hpp>
+#include <boost/lexical_cast/try_lexical_convert.hpp>
 
 #define BOARDSIZE 3 // * Want bigger or smaller boards? Change this macro!
 
@@ -18,6 +18,8 @@ bool EnemyIsBot = false;
 std::unique_ptr<Board<BOARDSIZE>> TicTacToeBoard = std::make_unique<Board<BOARDSIZE>>();
 std::unique_ptr<CassieBot<Board<BOARDSIZE>>> Bot = std::make_unique<CassieBot<Board<BOARDSIZE>>>();
 
+using boost::conversion::try_lexical_convert;
+
 void BotLoop()
 {
     BoardEnums::VictoryState victoryState = BoardEnums::VictoryState::Nobody;
@@ -32,7 +34,7 @@ void BotLoop()
             std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn: "; // Get player's move
             std::getline(std::cin, userInput);
             // Below are multiple checks that make sure the player's inputs are valid. It will run Board->SetSpace() until it returns a success state.
-            while(not tparse::tryIntParse(userInput, move))
+            while(not try_lexical_convert(userInput, move))
             {
                 std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
                 std::getline(std::cin, userInput);
@@ -49,7 +51,7 @@ void BotLoop()
                     break;
                 }
                 std::getline(std::cin, userInput);
-                while(not tparse::tryIntParse(userInput, move))
+                while(not try_lexical_convert(userInput, move))
                 {
                     std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
                     std::getline(std::cin, userInput);
@@ -103,7 +105,7 @@ void PvPLoop()
         std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn: "; // Get player's move
         std::getline(std::cin, userInput);
         // Below are multiple checks that make sure the player's inputs are valid
-        while(not tparse::tryIntParse(userInput, move))
+        while(not try_lexical_convert(userInput, move))
         {
             std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
             std::getline(std::cin, userInput);
@@ -120,7 +122,7 @@ void PvPLoop()
                 break;
             }
             std::getline(std::cin, userInput);
-            while(not tparse::tryIntParse(userInput, move))
+            while(not try_lexical_convert(userInput, move))
             {
                 std::cout << "Please enter a valid number, Player " << TicTacToeBoard->GetTurn() << ": ";
                 std::getline(std::cin, userInput);
