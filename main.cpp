@@ -20,6 +20,46 @@ std::unique_ptr<CassieBot<Board<BOARDSIZE>>> Bot = std::make_unique<CassieBot<Bo
 
 using boost::conversion::try_lexical_convert;
 
+void WinnerDialogue(BoardEnums::VictoryState &victoryState)
+{
+    if (EnemyIsBot)
+    {
+        switch (victoryState) // Print text for victory state
+        {
+        case BoardEnums::VictoryState::Draw:
+            std::cout << "The game has ended in a draw!\n";
+            break;
+        case BoardEnums::VictoryState::X:
+            std::cout << (Bot->Represents == BoardEnums::PlayerTurnState::X ? "CassieBot Wins!\n" : "Player X wins!\n");
+            break;
+        case BoardEnums::VictoryState::O:
+            std::cout << (Bot->Represents == BoardEnums::PlayerTurnState::O ? "CassieBot Wins!\n" : "Player O wins!\n");
+            break;
+        case BoardEnums::VictoryState::Nobody:
+            std::cout << "Nobody wins! Wait that shouldn't have happened...\n";
+            break;
+        }
+    }
+    else
+    {
+        switch (victoryState) // Print text for victory state
+        {
+        case BoardEnums::VictoryState::Draw:
+            std::cout << "The game has ended in a draw!\n";
+            break;
+        case BoardEnums::VictoryState::X:
+            std::cout << "Player X wins!\n";
+            break;
+        case BoardEnums::VictoryState::O:
+            std::cout << "Player O wins!\n";
+            break;
+        case BoardEnums::VictoryState::Nobody:
+            std::cout << "Nobody wins! Wait that shouldn't have happened...\n";
+            break;
+        }
+    }
+}
+
 void BotLoop()
 {
     BoardEnums::VictoryState victoryState = BoardEnums::VictoryState::Nobody;
@@ -76,21 +116,7 @@ void BotLoop()
     }
     std::cout << std::endl;
     TicTacToeBoard->DrawBoard();
-    switch (victoryState) // Print text for victory state
-    {
-    case BoardEnums::VictoryState::Draw:
-        std::cout << "The game has ended in a draw!\n";
-        break;
-    case BoardEnums::VictoryState::X:
-        std::cout << (Bot->Represents == BoardEnums::PlayerTurnState::X ? "CassieBot Wins!\n" : "Player X wins!\n");
-        break;
-    case BoardEnums::VictoryState::O:
-        std::cout << (Bot->Represents == BoardEnums::PlayerTurnState::O ? "CassieBot Wins!\n" : "Player O wins!\n");
-        break;
-    case BoardEnums::VictoryState::Nobody:
-        std::cout << "Nobody wins! Wait that shouldn't have happened...\n";
-        break;
-    }
+    WinnerDialogue(victoryState);
 }
 
 void PvPLoop()
@@ -132,21 +158,7 @@ void PvPLoop()
     }
     std::cout << std::endl;
     TicTacToeBoard->DrawBoard();
-    switch (victoryState) // Print text for victory state
-    {
-    case BoardEnums::VictoryState::Draw:
-        std::cout << "The game has ended in a draw!\n";
-        break;
-    case BoardEnums::VictoryState::X:
-        std::cout << "Player X wins!\n";
-        break;
-    case BoardEnums::VictoryState::O:
-        std::cout << "Player O wins!\n";
-        break;
-    case BoardEnums::VictoryState::Nobody:
-        std::cout << "Nobody wins! Wait that shouldn't have happened...\n";
-        break;
-    }
+    WinnerDialogue(victoryState);
 }
 
 void PlayAgainPrompt()
@@ -187,10 +199,6 @@ void Setup()
     {
         EnemyIsBot = true;
         std::cout << "CassieBot: Lets play!" << std::endl;
-    }
-    else
-    {
-        EnemyIsBot = false;
     }
     if (EnemyIsBot)
     {
