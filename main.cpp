@@ -100,7 +100,7 @@ void BotLoop()
         }
         else // This represents the bot's turn
         {
-            Bot->UpdateVision(*TicTacToeBoard); // Update the bot's view of the board
+            Bot->Vision = *TicTacToeBoard; // Update the bot's view of the board
             std::cout << "It is Player " << TicTacToeBoard->GetTurn() << "'s turn" << std::endl;
             std::cout << "CassieBot: Hmmm...\n";
             auto thinkTime = std::chrono::steady_clock::now();
@@ -184,7 +184,7 @@ void PlayAgainPrompt()
 
 void Setup()
 {
-    Bot->UpdateVision(*TicTacToeBoard);
+    Bot->Vision = *TicTacToeBoard;
     std::cout << "Welcome to my TicTacToe Game!\n"
         << "Enter a number from 1 to 9 to choose a space\n"
         << "Would you like to play with a bot? y/n: ";
