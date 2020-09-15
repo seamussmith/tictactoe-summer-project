@@ -106,7 +106,7 @@ void BotLoop()
             auto thinkTime = std::chrono::steady_clock::now();
             int thinkEnd = relrand::genint(500, 1000); // Freeze program for a random amount of miliseconds to make it look like the bot is thinking.
             while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - thinkTime) < std::chrono::milliseconds(thinkEnd));
-            while(TicTacToeBoard->SetSpace(move) != BoardEnums::MoveResult::Success) // Force the bot to choose another space if it makes an invalid move (Not desired)
+            while (TicTacToeBoard->SetSpace(move) != BoardEnums::MoveResult::Success) // Force the bot to choose another space if it makes an invalid move (Not desired)
             {
                 move = Bot->MakeMove();
             }
