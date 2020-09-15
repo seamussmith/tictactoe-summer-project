@@ -15,10 +15,6 @@ public:
     CassieBot()
     {
     }
-    void UpdateVision(BoardType newBoard)
-    {
-        Vision = newBoard;
-    }
     void SetPlayer(BoardEnums::PlayerTurnState Represents)
     {
         this->Represents = Represents;
