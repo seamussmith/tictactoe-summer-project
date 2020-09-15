@@ -210,7 +210,7 @@ void Setup()
             std::cout << "Please enter x or o: ";
             std::getline(std::cin, playerResponse);
         }
-        Bot->SetPlayer(playerResponse == "x" ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X);
+        Bot->Represents = (playerResponse == "x" ? BoardEnums::PlayerTurnState::O : BoardEnums::PlayerTurnState::X);
     }
 }
 
