@@ -15,10 +15,6 @@ public:
     CassieBot()
     {
     }
-    void SetPlayer(BoardEnums::PlayerTurnState Represents)
-    {
-        this->Represents = Represents;
-    }
     int MakeMove()
     {
         int move = 0;
