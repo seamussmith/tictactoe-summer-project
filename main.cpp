@@ -166,7 +166,7 @@ void PlayAgainPrompt()
     std::string playerResponse;
     std::cout << "Play another game? y/n: "; // Ask player if they want to play another game
     std::getline(std::cin, playerResponse);
-    while (not(playerResponse == "y") and not(playerResponse == "n"))
+    while (playerResponse != "y" and playerResponse != "n")
     {
         std::cout << "Please enter y or n: ";
         std::getline(std::cin, playerResponse);
